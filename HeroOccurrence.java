@@ -1,8 +1,6 @@
+import java.io.*;
 import java.nio.file.FileSystemNotFoundException;
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /* PseudoCode
@@ -23,6 +21,7 @@ and print the percentage of how much the character was used
 public class HeroOccurrence {
 
     File csvFile = new File("C:\\java_dev_kit\\MyMavenProject\\characters.csv");
+    File numberOfMatchesFile = new File("C:\\java_dev_kit\\MyMavenProject\\numberOfMatchesFile.csv");
     Scanner input = new Scanner(System.in);
 
     String[] characters;
@@ -31,36 +30,19 @@ public class HeroOccurrence {
         characters = charactersPlayed;
     }
 
-
-    //É preciso checar se o nome dado existe no banco. Checar no HeroOccurenceTest
-    /*public void checkCharacters() {
-        //Tratativa para ver se o nome está no banco de nomes
-
-        for(int i = 0; i < 5; i++) {
-            if(characters[i] == "Dva"){
-                System.out.println("Deu certo!");
-            }
-        }
-    }*/
-
-
-   
-
     public void addToFile(){
 
         try {
-            PrintWriter out = new PrintWriter(csvFile);
+            PrintWriter out = new PrintWriter(new FileWriter(csvFile , true)); //appends instead of creating new file;
             for (int i = 0; i < 5; i++) {
                 System.out.println(characters[i]);
-                out.write(characters[i] + ",\n"); //https://stackoverflow.com/questions/9961292/write-to-text-file-without-overwriting-in-java
+                out.write(characters[i] + ","); //https://stackoverflow.com/questions/9961292/write-to-text-file-without-overwriting-in-java
             }
-
+            out.write("\n");
             out.close();
 
         } catch(Exception e){}
 
     }
 }
-
-
 
