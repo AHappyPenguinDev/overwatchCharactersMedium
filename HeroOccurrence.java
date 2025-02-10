@@ -1,8 +1,6 @@
+import java.io.*;
 import java.nio.file.FileSystemNotFoundException;
 import java.util.Scanner;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /* PseudoCode
@@ -23,12 +21,19 @@ and print the percentage of how much the character was used
 public class HeroOccurrence {
 
     File csvFile = new File("C:\\java_dev_kit\\MyMavenProject\\characters.csv");
-    Scanner input = new Scanner(System.in);
+    File numberOfMatchesFile = new File("C:\\java_dev_kit\\MyMavenProject\\numberOfMatchesFile.csv");
 
     String[] characters;
 
+    int numberOfMatches;
+    String stringNumberOfMatches = "";
+
     HeroOccurrence(String[] charactersPlayed){
         characters = charactersPlayed;
+    }
+
+    HeroOccurrence() {
+        //characterMedium();
     }
 
 
@@ -43,24 +48,75 @@ public class HeroOccurrence {
         }
     }*/
 
+   BufferedReader reader = null;
+   String line = "";
 
-   
+   public void plusMatches() { //takes value of matches , adds 1 and writes to numberOfMatchesFile file
+
+      
+       try {
+           //creates numberOfMatches variable
+           reader = new BufferedReader(new FileReader(numberOfMatchesFile));
+
+           stringNumberOfMatches = reader.readLine();
+           System.out.println(stringNumberOfMatches);
+
+           numberOfMatches = Integer.parseInt(stringNumberOfMatches);
+           numberOfMatches++;
+           //System.out.printf("%-10s\n", numberOfMatches);
+
+           //updates numberOfMatchesFile.csv
+
+           stringNumberOfMatches = Integer.toString(numberOfMatches); // transforma numberOfMatches em stringNumberOfMatches denovo
+           //System.out.print(stringNumberOfMatches);
+
+           BufferedWriter out = new BufferedWriter(new FileWriter(numberOfMatchesFile));
+           out.write(stringNumberOfMatches);
+           out.flush();
+
+       } catch(Exception e){
+            e.printStackTrace();
+       }
+   }
+
 
     public void addToFile(){
 
         try {
-            PrintWriter out = new PrintWriter(csvFile);
-            for (int i = 0; i < 5; i++) {
-                System.out.println(characters[i]);
-                out.write(characters[i] + ",\n"); //https://stackoverflow.com/questions/9961292/write-to-text-file-without-overwriting-in-java
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(csvFile));
+            PrintWriter out = new PrintWriter(new FileWriter(csvFile, true)); //appends instead of creating new file;
+            Scanner scan = new Scanner(csvFile);
+
+            //adiciona conteudo de characters.csv em fileContent
+
+            String fileContent = "";
+            while(scan.hasNextLine()) {
+                fileContent = fileContent.concat(scan.nextLine() + '\n');
             }
 
-            out.close();
+            for (int i = 0; i < 5; i++) {
+                //System.out.p-rintln(characters[i]);
 
+                //checar discord cumwel e voltar aqui
+
+                //consigo checar se characters[i] está em fileContent, agora checar posição em que os personagens do input são iguais ao do fileContent
+                //replace character after ; using split
+            }
         } catch(Exception e){}
 
+      }
+
+    public void characterMedium() /*maybe change to public string later*/  {
+        /*
+         obter número de partidas de numberOfMatches.csv
+         para cada linha ,ler nome de cada personagem e checar qual personagem é.
+         se for personagem x, x++ no characterOccurrence.csv (orisa;23)                                                                                             1
+         (split com "," ) até linha ser vazia
+         BufferedReader.readLine()
+        */
+
+
     }
+
 }
-
-
 
